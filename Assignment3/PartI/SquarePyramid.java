@@ -14,23 +14,19 @@ public class SquarePyramid {
 		double hSq = Math.pow(height, 2);
 		double rootTerm = Math.sqrt((aSq/4) + hSq);
 		
-		return aSq + (2 * height * rootTerm);
+		return aSq + (2 * side * rootTerm);
 	}
-	
+		
+	public SquarePyramid(double side, double height) {
+		this.setSide(side);
+		this.setHeight(height);
+		
+		this.id = nextID++;
+	}
 	
 	public SquarePyramid() {
-		this.id = nextID++;
-		
+		this(1.0, 1.0);	
 	}
-
-
-	public SquarePyramid(double side, double height) {
-		this.side = side;
-		this.height = height;
-		
-		this.id = nextID++;
-	}
-
 
 	public double getSide() {
 		return side;
@@ -56,4 +52,21 @@ public class SquarePyramid {
 		return id;
 	}
 	
+	public static void main(String[] args) {
+		SquarePyramid sp1 = new SquarePyramid();
+		SquarePyramid sp2 = new SquarePyramid(5, 10);
+		
+		System.out.printf("sp1 id: %d height: %.2f side: %.2f\nsp2 id: %d, height: %.2f, side: %.2f\n",
+				sp1.getId(), sp1.getHeight(), sp1.getSide(),
+				sp2.getId(), sp2.getHeight(), sp2.getSide());
+		
+		System.out.printf("sp1 surface area: %f, volume: %f\n",
+				sp1.getSurfaceArea(), sp1.getVolume());
+		System.out.printf("sp2 surface area: %f, volume: %f\n",
+				sp2.getSurfaceArea(), sp2.getVolume());
+
+	}
+	
 }
+
+
