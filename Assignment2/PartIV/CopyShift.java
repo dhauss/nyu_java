@@ -7,8 +7,8 @@ public class CopyShift {
 			return;
 		}
 		
-		for(int destI = 0, sourceI = (shift - 1); destI < 50; destI++, sourceI++) {
-			sourceI %= 50;
+		for(int destI = shift, sourceI = 0; sourceI < 50; destI++, sourceI++) {
+			destI %= 50;
 			destArray[destI] = sourceArray[sourceI];		
 		}
 		
