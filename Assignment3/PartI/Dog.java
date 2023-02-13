@@ -4,6 +4,16 @@ public class Dog {
         private String owner;
         private String breed;
         
+		public Dog() {
+        	this(0, "unknown", "unknown");
+        }
+        
+        public Dog(int age, String owner, String breed) {
+			setAge(age);
+			setOwner(owner);
+			setBreed(breed);
+		}
+        
         public static boolean hasSameOwner (Dog dog1, Dog dog2) {
         	return dog1.getOwner().equalsIgnoreCase(dog2.getOwner());
         }
@@ -21,24 +31,7 @@ public class Dog {
         	
         	return ave;
         }
-        
-
-        @Override
-		public String toString() {
-			return "Breed: " + breed + ", Owner: " + owner + ", Age: " + age; 
-					
-		}
-
-		public Dog() {
-        	this(0, "unknown", "unknown");
-        }
-        
-        public Dog(int age, String owner, String breed) {
-			setAge(age);
-			setOwner(owner);
-			setBreed(breed);
-		}
-
+      
 		public int getAge() {
 			return age;
 		}
@@ -61,6 +54,12 @@ public class Dog {
 
 		public void setBreed(String breed) {
 			this.breed = breed;
+		}
+		
+        @Override
+		public String toString() {
+			return "Breed: " + breed + ", Owner: " + owner + ", Age: " + age; 
+					
 		}
 
 		public static void main(String[] args) {
