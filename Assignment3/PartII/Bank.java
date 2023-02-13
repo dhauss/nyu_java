@@ -10,7 +10,7 @@ public class Bank {
 		accounts = new Account[5];
 		
 		for(int i = 0; i < 5; i++) {
-			accounts[i] = new Account(1000);
+			getAllAccounts()[i] = new Account(1000);
 		}
 	}
 	
@@ -21,7 +21,6 @@ public class Bank {
 			if(account.getId() == id)
 				targetAccount = account;
 		}
-		
 		
 		return targetAccount;
 	}
@@ -39,6 +38,7 @@ public class Bank {
 		
 		Scanner in = new Scanner(System.in);
 		Bank bank = new Bank();
+		
 		for (;;) {
 			System.out.println("Accounts:");
 			Account[] accounts = bank.getAllAccounts();
@@ -68,7 +68,8 @@ public class Bank {
 			} else {
 				System.out.println("cannot withdraw more money than is in account");
 				continue;
-			}
+			}	
 		}
+		
 	}
 }
