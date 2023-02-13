@@ -39,6 +39,7 @@ public class Account {
 		return id;
 	}
 	
+	/*						********Main for testing*********
 	public static void main(String[] args) {
 		Account a1 = new Account();
 		Account a2 = new Account(100);
@@ -60,5 +61,5 @@ public class Account {
 
 		
 	}
-	
+	*/
 }

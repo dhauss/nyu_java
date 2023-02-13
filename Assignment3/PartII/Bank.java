@@ -3,29 +3,36 @@ import java.util.Scanner;
 public class Bank {
 
 	public static final int NUM_ACCOUNTS = 5;
+	private Account[] accounts;
 	
 	
 	public Bank() {
-		// create NUM_ACCOUNTS accounts in an array
-		// with each account having a starting balance
-		// of $1000
+		accounts = new Account[5];
+		
+		for(int i = 0; i < 5; i++) {
+			accounts[i] = new Account(1000);
+		}
 	}
 	
 	public Account getAccountById(int id) {
+		Account targetAccount = null;
 		
-		// this should take an id, search
-		// through the array of accounts until
-		// it finds the account matching the id
-		// and returns it, returning null if
-		// it is not found
+		for(Account account: getAllAccounts()) {
+			if(account.getId() == id)
+				targetAccount = account;
+		}
 		
-		return null;
+		
+		return targetAccount;
 	}
 	
 	public int numAccounts() {
-		// returns the number of accounts:
-		// ie, the length of the array accounts
-		return 0;
+
+		return getAllAccounts().length;
+	}
+	
+	public Account[] getAllAccounts() {
+		return accounts;
 	}
 	
 	public static void main(String[] args) {
