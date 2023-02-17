@@ -9,7 +9,7 @@ public class Bank {
 	public Bank() {
 		accounts = new Account[5];
 		
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < NUM_ACCOUNTS; i++) {
 			getAllAccounts()[i] = new Account(1000);
 		}
 	}

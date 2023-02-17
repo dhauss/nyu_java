@@ -1,17 +1,17 @@
  
 public class Account {
-	private static int count = 0;
+	private static int account_count = 1;
 	private double balance;
 	private int id;
 	
 	public Account() {
 		setBalance(0);
-		this.id = count++;
+		this.id = account_count++;
 	}
 	
 	public Account(double startingBalance) {
 		setBalance(startingBalance);
-		this.id = count++;
+		this.id = account_count++;
 	}
 
 	public boolean withdraw(double amount) {
@@ -39,7 +39,7 @@ public class Account {
 		return id;
 	}
 	
-	/*						********Main for testing*********
+	/*						//********Main for testing*********
 	public static void main(String[] args) {
 		Account a1 = new Account();
 		Account a2 = new Account(100);

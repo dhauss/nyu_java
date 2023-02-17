@@ -74,6 +74,12 @@ public class Dog {
                 System.out.println("Average: " + aveAge(dogs));
                 System.out.println(hasSameOwner(dogs[2], dogs[4]));
                 System.out.println(hasSameOwner(dogs[0], dogs[4]));
+                
+                dogs[0].setOwner("Me");
+                dogs[0].setBreed("Poodle");
+                dogs[0].setAge(5);
+                
+                System.out.println(dogs[0]);
 
 
                 
