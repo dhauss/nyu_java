@@ -1,39 +1,69 @@
 package vehicles;
 
-public abstract class Vehicle {
-	private static int nextID = 0;
-	
+public class Vehicle {
+	private final String ACCELERATING = "accelerating";
+	private static int nextID = 1;
+	private int id;
+	private int wheels;
+	private String color;
+	private double cargoSpace;
+
+
 	public Vehicle() {
 		setWheels(0);
 		setColor("unknown");
 		setCargoSpace(0);
-		nextID++;
+		this.id = nextID++;
 	}
-	
 	
 	public Vehicle(int wheels, String color, double cargoSpace) {
 		setWheels(wheels);
 		setColor(color);
 		setCargoSpace(cargoSpace);
-		nextID++;
-	}
-	
-	public int getNextID() {
-		return nextID;
+		this.id = nextID++;
 	}
 
-	abstract int getWheels();
+	public String getAccelerating() {
+		return ACCELERATING;
+	}
+
+	public int getWheels() {
+		return wheels;
+	}
 	
-	abstract void setWheels(int wheels);
+	public void setWheels(int wheels) {
+		this.wheels = wheels;
+	}
 	
-	abstract String getColor();
+	public String getColor() {
+		return color;
+	}
 	
-	abstract void setColor(String color);
+	public void setColor(String color) {
+		this.color = color;
+	}
 	
-	abstract int getId();
+	public int getId() {
+		return id;
+	}
 	
-	abstract double getCargoSpace();
+	public double getCargoSpace() {
+		return cargoSpace;
+	}
 	
-	abstract void setCargoSpace(double cargoSpace);
+	public void setCargoSpace(double cargoSpace) {
+		if(cargoSpace >= 0)
+			this.cargoSpace = cargoSpace;
+		else {
+			System.out.println("Cargo space must be nonnegative");
+			this.cargoSpace = 0;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Vehicle [id=" + id + ", wheels=" + wheels + ", color=" + color + ", cargoSpace=" + cargoSpace
+				+ ", accelerating=" + ACCELERATING + "]";
+	}
 	
 }

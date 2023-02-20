@@ -1,35 +1,23 @@
 package vehicles;
 
+import java.util.Arrays;
+
 public class Motorcycle extends Vehicle {
-	private int id;
-	private int wheels;
-	private String color;
-	private double cargoSpace;
 	private String[] accessories;
 	
 
 	public Motorcycle() {
-		super();
-		this.id = super.getNextID();
+		super(2, "unknown", 0);
 		setAccessories(new String[0]);
 	}
 
 	public Motorcycle(String color, String[] accessories) {
 		super(2, color, 0);
 		setAccessories(accessories);
-		this.id = super.getNextID();
 	}
 	
 	public String twistThrottle() {
-		return "accelerating";
-	}
-	
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
+		return super.getAccelerating();
 	}
 
 	public String[] getAccessories() {
@@ -39,25 +27,21 @@ public class Motorcycle extends Vehicle {
 	public void setAccessories(String[] accessories) {
 		this.accessories = accessories;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public int getWheels() {
-		return wheels;
-	}
-
-	public void setWheels(int wheels) {
-		this.wheels = 2;
-	}
 	
-	public double getCargoSpace() {
-		return cargoSpace;
+	@Override
+	public void setWheels(int wheels) {
+		if(wheels == 2)
+			super.setWheels(wheels);
+		else{
+			System.out.println("Number of motorcycle wheels must be 2");
+		}
+		
 	}
 
-	public void setCargoSpace(double cargoSpace) {
-		this.cargoSpace = 0;
+	@Override
+	public String toString() {
+		return "Motorcycle [accessories=" + Arrays.toString(accessories) +
+				"] which is a subclass of " + super.toString();
 	}
 
 }
