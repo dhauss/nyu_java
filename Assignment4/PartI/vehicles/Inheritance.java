@@ -6,6 +6,25 @@ public class Inheritance {
 		// Here's some scratch space to experiment/debug your Employee objects
 		// note-- do not use this particular class for anything. the intent
 		// is to use this main method to write some scratch code.
+		
+		Car v = new Car();
+		Car c = new Car("red", 5, 2);
+		String[] acc = {"helmet clip", "grip warmers", "usb charger"};
+		Motorcycle m = new Motorcycle("black", acc);
+
+		
+		System.out.println(v.getId());
+		System.out.println(c.getId());
+		System.out.println(m.getId());
+		System.out.println(m.getAccessories()[0]);
+		System.out.println(c.getWheels());
+		System.out.println(c.getColor());
+		System.out.println(c.getDoors());
+		System.out.println(c.getCargoSpace());
+		System.out.println(v.pressGasPedal());
+
+
+		
 	}
 
 }
