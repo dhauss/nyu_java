@@ -27,7 +27,17 @@ public class Car extends Vehicle {
 			System.out.println("Invalid number of doors: must be 2 or 4.");
 			this.doors = 4;
 		}
-	}	
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Car) {
+			return super.equals(o) && ((Car) o).getDoors() == this.getDoors();
+		}
+		
+		return false;
+		
+	}
 	
 	@Override
 	public void setWheels(int wheels) {

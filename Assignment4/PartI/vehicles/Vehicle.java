@@ -61,6 +61,17 @@ public class Vehicle {
 	}
 	
 	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Vehicle) {
+			return ((Vehicle) o).getCargoSpace() == this.getCargoSpace()
+					&& ((Vehicle) o).getColor().equalsIgnoreCase(this.getColor()) 
+					&& ((Vehicle) o).getWheels() == this.getWheels();
+		}
+		
+		return false;
+	}
+	
+	@Override
 	public String toString() {
 		return "Vehicle [id=" + id + ", wheels=" + wheels + ", color=" + color + ", cargoSpace=" + cargoSpace
 				+ ", accelerating=" + ACCELERATING + "]";

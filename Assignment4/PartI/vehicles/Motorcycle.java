@@ -29,6 +29,44 @@ public class Motorcycle extends Vehicle {
 	}
 	
 	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Motorcycle) {
+			if(!super.equals(o)) {
+				return false;
+			}
+			
+			for(String thisAccessory: this.getAccessories()) {
+				boolean accessoriesEqual = false;
+				for(String oAccessory: ((Motorcycle)o).getAccessories()){
+					if(thisAccessory.equalsIgnoreCase(oAccessory)) {
+						accessoriesEqual = true;
+						break;
+					}
+				}
+				if(!accessoriesEqual) {
+					return false;
+				}
+			}
+			
+			for(String oAccessory: ((Motorcycle)o).getAccessories()){
+				boolean accessoriesEqual = false;
+				for(String thisAccessory: this.getAccessories()) {
+					if(thisAccessory.equalsIgnoreCase(oAccessory)) {
+						accessoriesEqual = true;
+						break;
+					}
+				}
+				if(!accessoriesEqual) {
+					return false;
+				}
+
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
 	public void setWheels(int wheels) {
 		if(wheels == 2)
 			super.setWheels(wheels);

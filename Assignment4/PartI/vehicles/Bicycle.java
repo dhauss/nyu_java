@@ -19,6 +19,16 @@ public class Bicycle extends Vehicle {
 	}
 	
 	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Bicycle) {
+			return super.equals(o) && ((Bicycle) o).isElectric() == this.isElectric();
+		}
+		
+		return false;
+		
+	}
+	
+	@Override
 	public void setWheels(int wheels) {
 		if(this instanceof CargoCycle) {
 			if(wheels >= 2 && wheels <= 4)
@@ -40,10 +50,11 @@ public class Bicycle extends Vehicle {
 	public void setCargoSpace(double cargoSpace) {
 		if(this instanceof CargoCycle)
 			super.setCargoSpace(cargoSpace);
-		else
+		else {
 			super.setCargoSpace(0);
 			if(cargoSpace > 0)
 				System.out.println("Bicycles have no cargo space");
+		}
 	}
 	
 	public boolean isElectric() {
