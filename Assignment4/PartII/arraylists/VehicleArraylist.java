@@ -4,15 +4,42 @@ import java.util.ArrayList;
 import vehicles.*;
 
 public class VehicleArraylist {
+	
+	public static double getAveCargo(ArrayList<Vehicle> vehiclesArrayList) {
+		double totalCargo = 0;
+		int numCars = 0;
+		for(Object o: vehiclesArrayList)
+			if(o instanceof Car) {
+				numCars++;
+				totalCargo += ((Car)o).getCargoSpace();
+			}
+		
+		return totalCargo/numCars;
+	}
+	
+	public static void removeDuplicateCars(ArrayList<Vehicle> vehiclesArrayList, Car carCopy) {
+		ArrayList<Vehicle> removeList = new ArrayList<>();
+		for(Vehicle v: vehiclesArrayList) {
+			if(v == carCopy) {
+				System.out.println("Same car: " + v);
+				removeList.add(v);
+			}
+			else if(v.equals(carCopy)) {
+				System.out.println("Duplicate car: " + v);
+				removeList.add(v);
+			}
+			else {
+				continue;
+			}
+			
+		}
+		vehiclesArrayList.removeAll(removeList);
+	}
 
 	public static void main(String[] args) {
-		// this ArrayList MUST be parameterized
 		ArrayList<Vehicle> vehiclesArrayList = new ArrayList<>();
 		
-		// this is the variable you should retain to compare
-		// to the other objects in the arraylist
 		String[] redMotoAccessories = {"grip warmers", "usb charger"}; 
-		
 		Motorcycle redMoto = new Motorcycle("red", redMotoAccessories);
 		Car blueCar = new Car("blue", 20, 4);
 		Car blueCar2 = new Car("blue", 20, 4);
@@ -21,6 +48,7 @@ public class VehicleArraylist {
 		CargoCycle greenCargo2 = new CargoCycle("green", 10, 3, true);
 		Car grayCar = new Car("gray", 10, 2);
 		Car whiteCar = new Car("white", 25, 4);
+
 		
 		vehiclesArrayList.add(redMoto);
 		vehiclesArrayList.add(blueCar);
@@ -30,35 +58,18 @@ public class VehicleArraylist {
 		vehiclesArrayList.add(greenCargo2);
 		vehiclesArrayList.add(grayCar);
 		vehiclesArrayList.add(whiteCar);
+
 		
 		
-		System.out.println("***********Part a************\n");
-		
-		double totalCargo = 0;
-		int numCars = 0;
-		for(Vehicle o: vehiclesArrayList)
-			if(o instanceof Car) {
-				numCars++;
-				totalCargo += ((Car)o).getCargoSpace();
-			}
-		System.out.println("Average cargo space in cars: " + totalCargo/numCars);
-		
-		System.out.println("\n***********Part b************\n");
-		
-		ArrayList<Vehicle> keepList = new ArrayList<>();
-		for(Vehicle o: vehiclesArrayList) {
-			if(!keepList.contains(o)){
-				keepList.add(o);
-			}
-			else {
-				System.out.println("Duplicate: " + o);
-			}
-		}
+		System.out.println("***********Part b************\n");				
+		System.out.println("Average cargo space in cars: " + getAveCargo(vehiclesArrayList));
 		
 		System.out.println("\n***********Part c************\n");
+		Car blueCarCopy = blueCar;
+		removeDuplicateCars(vehiclesArrayList, blueCarCopy);
 
-		vehiclesArrayList = keepList;
-		for(Vehicle o: vehiclesArrayList) {
+		System.out.println("\n***********Part d************\n");		
+		for(Object o: vehiclesArrayList) {
 			System.out.println("Remaining: " + o);
 		}
 		
