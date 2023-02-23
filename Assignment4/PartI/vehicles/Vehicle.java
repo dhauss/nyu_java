@@ -74,7 +74,7 @@ public class Vehicle {
 	@Override
 	public String toString() {
 		return "Vehicle [id=" + id + ", wheels=" + wheels + ", color=" + color + ", cargoSpace=" + cargoSpace
-				+ ", accelerating=" + ACCELERATING + "]";
+				+ ", nextID=" + nextID + ", accelerating=" + ACCELERATING + "]";
 	}
 	
 }

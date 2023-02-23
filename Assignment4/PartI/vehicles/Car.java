@@ -38,6 +38,12 @@ public class Car extends Vehicle {
 		return false;
 		
 	}
+
+
+	@Override
+	public String toString() {
+		return "Car [doors=" + doors + "] which is a subclass of " + super.toString();
+	}
 	
 	@Override
 	public void setWheels(int wheels) {
@@ -48,14 +54,10 @@ public class Car extends Vehicle {
 		}
 		
 	}
-
-	@Override
-	public String toString() {
-		return "Car [doors=" + doors + "] which is a subclass of " + super.toString();
-	}
-
-
-	
-	
-
 }
+	 
+
+	
+	
+
+

@@ -23,6 +23,8 @@ public class Inheritance {
 		Motorcycle m = new Motorcycle("black", acc);
 		Motorcycle m2 = new Motorcycle("black", acc3);
 		System.out.println(cc.equals(cc2));
+		
+		System.out.println(m2);
 
 		/*
 		System.out.println(b.pedal());
@@ -38,7 +40,7 @@ public class Inheritance {
 		System.out.println(c.getDoors());
 		System.out.println(c.getCargoSpace());
 		System.out.println(v.pressGasPedal());
-		 */
+		*/
 		
 	}
 

@@ -12,8 +12,7 @@ public class VehicleArraylist {
 			if(o instanceof Car) {
 				numCars++;
 				totalCargo += ((Car)o).getCargoSpace();
-			}
-		
+			}	
 		return totalCargo/numCars;
 	}
 	
@@ -30,8 +29,7 @@ public class VehicleArraylist {
 			}
 			else {
 				continue;
-			}
-			
+			}		
 		}
 		vehiclesArrayList.removeAll(removeList);
 	}
@@ -45,11 +43,10 @@ public class VehicleArraylist {
 		Car blueCar2 = new Car("blue", 20, 4);
 		Bicycle bike = new Bicycle("black", false);
 		CargoCycle greenCargo = new CargoCycle("green", 10, 3, true);
-		CargoCycle greenCargo2 = new CargoCycle("green", 10, 3, true);
+		CargoCycle greenCargo2 = new CargoCycle("green", 10, 3, false);
 		Car grayCar = new Car("gray", 10, 2);
 		Car whiteCar = new Car("white", 25, 4);
 
-		
 		vehiclesArrayList.add(redMoto);
 		vehiclesArrayList.add(blueCar);
 		vehiclesArrayList.add(blueCar2);
@@ -57,9 +54,7 @@ public class VehicleArraylist {
 		vehiclesArrayList.add(greenCargo);
 		vehiclesArrayList.add(greenCargo2);
 		vehiclesArrayList.add(grayCar);
-		vehiclesArrayList.add(whiteCar);
-
-		
+		vehiclesArrayList.add(whiteCar);	
 		
 		System.out.println("***********Part b************\n");				
 		System.out.println("Average cargo space in cars: " + getAveCargo(vehiclesArrayList));
@@ -72,16 +67,5 @@ public class VehicleArraylist {
 		for(Object o: vehiclesArrayList) {
 			System.out.println("Remaining: " + o);
 		}
-		
-				
-
-
-
-
-
-
-
-
 	}
-
 }
