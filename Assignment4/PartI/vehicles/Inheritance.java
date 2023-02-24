@@ -14,7 +14,7 @@ public class Inheritance {
 		Bicycle b2 = new Bicycle("red", true);
 		Bicycle b3 = new Bicycle("REd", true);
 		CargoCycle cc = new CargoCycle("red", 5.5, 3, true);
-		CargoCycle cc2 = new CargoCycle("red", 5.5, 3, true);
+		CargoCycle cc2 = new CargoCycle("red", 5.5, 3, false);
 		
 		String[] acc = {"helmet clip", "grip warmers", "usb charger"};
 		String[] acc2 = {"helmet clip", "grip warmers"};
@@ -22,11 +22,9 @@ public class Inheritance {
 
 		Motorcycle m = new Motorcycle("black", acc);
 		Motorcycle m2 = new Motorcycle("black", acc3);
-		System.out.println(cc.equals(cc2));
 		
+		System.out.println(cc.equals(cc2));
 		System.out.println(m2);
-
-		/*
 		System.out.println(b.pedal());
 		System.out.println(cc.pedal());
 		System.out.println(cc);
@@ -40,7 +38,6 @@ public class Inheritance {
 		System.out.println(c.getDoors());
 		System.out.println(c.getCargoSpace());
 		System.out.println(v.pressGasPedal());
-		*/
 		
 	}
 

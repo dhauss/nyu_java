@@ -25,7 +25,6 @@ public class Bicycle extends Vehicle {
 		}
 		
 		return false;
-		
 	}
 	
 	@Override

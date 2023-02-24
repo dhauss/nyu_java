@@ -46,6 +46,8 @@ public class VehicleArraylist {
 		CargoCycle greenCargo2 = new CargoCycle("green", 10, 3, false);
 		Car grayCar = new Car("gray", 10, 2);
 		Car whiteCar = new Car("white", 25, 4);
+		
+		Car blueCarCopy = blueCar;
 
 		vehiclesArrayList.add(redMoto);
 		vehiclesArrayList.add(blueCar);
@@ -60,7 +62,6 @@ public class VehicleArraylist {
 		System.out.println("Average cargo space in cars: " + getAveCargo(vehiclesArrayList));
 		
 		System.out.println("\n***********Part c************\n");
-		Car blueCarCopy = blueCar;
 		removeDuplicateCars(vehiclesArrayList, blueCarCopy);
 
 		System.out.println("\n***********Part d************\n");		
