@@ -4,12 +4,12 @@ public class Bicycle extends Vehicle {
 	private boolean isElectric;
 	private final String pedaling = "pedaling";
 
-	public Bicycle() {
+	public Bicycle() throws VehicleException{
 		super(2, "unknown", 0);
 		this.isElectric = false;
 	}
 
-	public Bicycle(String color, boolean isElectric) {
+	public Bicycle(String color, boolean isElectric) throws VehicleException{
 		super(2, color, 0);
 		this.isElectric = isElectric;
 	}
@@ -28,31 +28,31 @@ public class Bicycle extends Vehicle {
 	}
 	
 	@Override
-	public void setWheels(int wheels) {
+	public void setWheels(int wheels) throws VehicleException{
 		if(this instanceof CargoCycle) {
 			if(wheels >= 2 && wheels <= 4)
 				super.setWheels(wheels);
 			else {
-				System.out.println("Cargo cycle can only have 2-4 wheels");
+				throw new VehicleException("Cargo cycle can only have 2-4 wheels");
 			}
 		}
 		else {
 			if(wheels == 2)
 				super.setWheels(wheels);
 			else {
-				System.out.println("Bicycle can only have 2 wheels");
+				throw new VehicleException("Bicycle can only have 2 wheels");
 			}
 		}				
 	}
 	
 	@Override
-	public void setCargoSpace(double cargoSpace) {
+	public void setCargoSpace(double cargoSpace) throws VehicleException{
 		if(this instanceof CargoCycle)
 			super.setCargoSpace(cargoSpace);
 		else {
 			super.setCargoSpace(0);
 			if(cargoSpace > 0)
-				System.out.println("Bicycles have no cargo space");
+				throw new VehicleException("Bicycles have no cargo space");
 		}
 	}
 	

@@ -2,18 +2,16 @@ package vehicles;
 
 public class CargoCycle extends Bicycle{
 
-	public CargoCycle() {
+	public CargoCycle()  throws VehicleException{
 		super();
 		setElectric(false);
 	}
 
 	
-	public CargoCycle(String color, double cargoSpace, int wheels, boolean isElectric) {
-		super();
-		setColor(color);
+	public CargoCycle(String color, double cargoSpace, int wheels, boolean isElectric)  throws VehicleException{
+		super(color, isElectric);
 		setCargoSpace(cargoSpace);
 		setWheels(wheels);
-		setElectric(isElectric);
 	}
 
 	@Override

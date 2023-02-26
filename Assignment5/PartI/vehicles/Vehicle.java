@@ -9,18 +9,18 @@ public class Vehicle {
 	private double cargoSpace;
 
 
-	public Vehicle() {
+	public Vehicle() throws VehicleException{
 		setWheels(0);
 		setColor("unknown");
 		setCargoSpace(0);
 		this.id = nextID++;
 	}
 	
-	public Vehicle(int wheels, String color, double cargoSpace) {
-		setWheels(wheels);
+	public Vehicle(int wheels, String color, double cargoSpace) throws VehicleException{
 		setColor(color);
-		setCargoSpace(cargoSpace);
 		this.id = nextID++;
+		setCargoSpace(cargoSpace);
+		setWheels(wheels);
 	}
 
 	public String getAccelerating() {
@@ -31,8 +31,14 @@ public class Vehicle {
 		return wheels;
 	}
 	
-	public void setWheels(int wheels) {
-		this.wheels = wheels;
+	public void setWheels(int wheels) throws VehicleException{
+		if(wheels >= 2) {
+			this.wheels = wheels;
+		}
+		else {
+			this.wheels = 2;
+			throw new VehicleException("Vehicle must have at least 2 wheels");
+		}
 	}
 	
 	public String getColor() {
@@ -51,12 +57,12 @@ public class Vehicle {
 		return cargoSpace;
 	}
 	
-	public void setCargoSpace(double cargoSpace) {
+	public void setCargoSpace(double cargoSpace) throws VehicleException{
 		if(cargoSpace >= 0)
 			this.cargoSpace = cargoSpace;
 		else {
-			System.out.println("Cargo space must be nonnegative");
 			this.cargoSpace = 0;
+			throw new VehicleException("Vehicle cargo space must be nonnegative.");
 		}
 	}
 	

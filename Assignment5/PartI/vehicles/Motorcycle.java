@@ -6,13 +6,12 @@ import java.util.Arrays;
 public class Motorcycle extends Vehicle {
 	private String[] accessories;
 	
-
-	public Motorcycle() {
+	public Motorcycle() throws VehicleException{
 		super(2, "unknown", 0);
 		setAccessories(new String[0]);
 	}
 
-	public Motorcycle(String color, String[] accessories) {
+	public Motorcycle(String color, String[] accessories) throws VehicleException{
 		super(2, color, 0);
 		setAccessories(accessories);
 	}
@@ -68,11 +67,11 @@ public class Motorcycle extends Vehicle {
 	}
 	
 	@Override
-	public void setWheels(int wheels) {
+	public void setWheels(int wheels)  throws VehicleException{
 		if(wheels == 2)
 			super.setWheels(wheels);
 		else{
-			System.out.println("Number of motorcycle wheels must be 2");
+			throw new VehicleException("Number of motorcycle wheels must be 2");
 		}
 		
 	}

@@ -3,11 +3,11 @@ package vehicles;
 public class Car extends Vehicle {
 	private int doors;
 
-	public Car() {
+	public Car() throws VehicleException{
 		super(4, "unknown", 0);
 	}
 
-	public Car(String color, double cargoSpace, int doors) {
+	public Car(String color, double cargoSpace, int doors) throws VehicleException {
 		super(4, color, cargoSpace);
 		setDoors(doors);
 	}
@@ -20,12 +20,12 @@ public class Car extends Vehicle {
 		return doors;
 	}
 
-	public void setDoors(int doors) {
+	public void setDoors(int doors) throws VehicleException {
 		if(doors == 2 || doors == 4)
 			this.doors = doors;
 		else {
-			System.out.println("Invalid number of doors: must be 2 or 4.");
 			this.doors = 4;
+			throw new VehicleException("Invalid number of doors: must be 2 or 4.");
 		}
 	}
 	
@@ -46,11 +46,11 @@ public class Car extends Vehicle {
 	}
 	
 	@Override
-	public void setWheels(int wheels) {
+	public void setWheels(int wheels) throws VehicleException{
 		if(wheels == 4)
 			super.setWheels(wheels);
 		else{
-			System.out.println("Number of car wheels must be 4");
+			throw new VehicleException("Number of car wheels must be 4");
 		}
 		
 	}
