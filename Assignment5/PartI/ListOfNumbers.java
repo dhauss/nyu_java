@@ -4,14 +4,14 @@ import java.util.ArrayList;
  
 public class ListOfNumbers {
 	
-    private ArrayList pairList;
+    private ArrayList<RDFTriple<Integer, Integer, Integer>> pairList;
     private String fileName;
  
     public ListOfNumbers () {
         // create an ArrayList of Pairs of Integers
     }
     
-    public ArrayList getPairList() {
+    public ArrayList<RDFTriple<Integer, Integer, Integer>> getPairList() {
     	return this.pairList;
     }
     
@@ -22,6 +22,7 @@ public class ListOfNumbers {
     		Integer number3 = (int) (Math.random()*10000);
     		// fill the existing list with RDFTriple objects
     		// of three numbers.
+    		pairList.add(new RDFTriple(number1, number2, number3));
     	}
     }
     
