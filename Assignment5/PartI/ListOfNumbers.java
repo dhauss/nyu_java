@@ -4,17 +4,17 @@ import java.util.ArrayList;
  
 public class ListOfNumbers {
 	
-    private ArrayList<RDFTriple<Integer, Integer, Integer>> pairList;
+    private ArrayList<RDFTriple<Integer, Integer, Integer>> rdfTripleList;
     private String fileName;
  
     public ListOfNumbers () {
         // create an ArrayList of Pairs of Integers
-    	pairList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
+    	rdfTripleList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
     	fileName = null;
     }
     
-    public ArrayList<RDFTriple<Integer, Integer, Integer>> getPairList() {
-    	return this.pairList;
+    public ArrayList<RDFTriple<Integer, Integer, Integer>> getrdfTripleList() {
+    	return this.rdfTripleList;
     }
     
     public void createList() {
@@ -24,7 +24,7 @@ public class ListOfNumbers {
     		Integer number3 = (int) (Math.random()*10000);
     		// fill the existing list with RDFTriple objects
     		// of three numbers.
-    		pairList.add(new RDFTriple(number1, number2, number3));
+    		rdfTripleList.add(new RDFTriple<Integer, Integer, Integer>(number1, number2, number3));
     	}
     }
     
@@ -35,7 +35,7 @@ public class ListOfNumbers {
     }
     
     public void readList() {
-    	pairList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
+    	rdfTripleList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
     	FileReader fr = null;
     	BufferedReader br = null;
 
@@ -55,7 +55,7 @@ public class ListOfNumbers {
     			String[] nums = curLine.split(" ");
     			System.out.println(nums[0] + ", " + nums[1] + ", " + nums[2]);
     			try {
-    				pairList.add(new RDFTriple(Integer.parseInt(nums[0]),
+    				rdfTripleList.add(new RDFTriple<Integer, Integer, Integer>(Integer.parseInt(nums[0]),
     											Integer.parseInt(nums[1]), Integer.parseInt(nums[2])));
     			}
     			catch (NumberFormatException nfe) {
@@ -77,9 +77,10 @@ public class ListOfNumbers {
         try {
             System.out.println("Entering try statement");
             out = new PrintWriter(new FileWriter(this.fileName));
-            for (int i = 0; i < pairList.size(); i++)
-                out.println(pairList.get(i).getSubj() + " " + pairList.get(i).getPred()
-                			+ " " + pairList.get(i).getObj());
+            for (int i = 0; i < rdfTripleList.size(); i++) {
+                out.println(rdfTripleList.get(i).getSubj() + " " + rdfTripleList.get(i).getPred()
+                			+ " " + rdfTripleList.get(i).getObj());
+            }
         } catch (IndexOutOfBoundsException e) {
             System.err.println("Caught IndexOutOfBoundsException: " +
                                  e.getMessage());
@@ -127,24 +128,26 @@ public class ListOfNumbers {
     
     
     public static void main(String[] args) {
-    	/*
+    	
     	ListOfNumbers listOfNumbers = new ListOfNumbers("numberfile.txt");
     	ListOfNumbers.cat("numberfile.txt");
     	listOfNumbers.readList();
-        for (int i = 0; i < listOfNumbers.getPairList().size(); i++) {
-            System.out.println(listOfNumbers.getPairList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
-            			+ " " + listOfNumbers.getPairList().get(i).getObj());
+    	
+        /*for (int i = 0; i < listOfNuetrdfTripleList().size(); i++) {
+            System.out.println(listOfNumbers.getrdfTripleList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
+            			+ " " + listOfNumbers.getrdfTripleList().get(i).getObj());
         }
         
     	ListOfNumbers lon = new ListOfNumbers("test.txt");
     	lon.createList();
     	lon.writeList();
-
+		
+		/*
     	ListOfNumbers listOfNumbers = new ListOfNumbers();
     	listOfNumbers.createList();
-        for (int i = 0; i < listOfNumbers.getPairList().size(); i++) {
-            System.out.println(listOfNumbers.getPairList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
-            			+ " " + listOfNumbers.getPairList().get(i).getObj());
+        for (int i = 0; i < listOfNumbers.getrdfTripleList().size(); i++) {
+            System.out.println(listOfNumbers.getrdfTripleList().get(i).getSubj() + " " + listOfNumbers.getrdfTripleList().get(i).getPred()
+            			+ " " + listOfNumbers.getrdfTripleList().get(i).getObj());
         }
         */
 
