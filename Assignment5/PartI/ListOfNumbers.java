@@ -9,6 +9,8 @@ public class ListOfNumbers {
  
     public ListOfNumbers () {
         // create an ArrayList of Pairs of Integers
+    	pairList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
+    	fileName = null;
     }
     
     public ArrayList<RDFTriple<Integer, Integer, Integer>> getPairList() {
@@ -33,7 +35,7 @@ public class ListOfNumbers {
     }
     
     public void readList() {
-    	
+
     }
     
     public void writeList() {
@@ -42,7 +44,8 @@ public class ListOfNumbers {
             System.out.println("Entering try statement");
             out = new PrintWriter(new FileWriter(this.fileName));
             for (int i = 0; i < pairList.size(); i++)
-                out.println(pairList.get(i).getKey() + " " + pairList.get(i).getValue());
+                out.println(pairList.get(i).getSubj() + " " + pairList.get(i).getPred()
+                			+ " " + pairList.get(i).getObj());
         } catch (IndexOutOfBoundsException e) {
             System.err.println("Caught IndexOutOfBoundsException: " +
                                  e.getMessage());
@@ -58,6 +61,7 @@ public class ListOfNumbers {
         }
     }
     
+    /*
     public static void cat(String fileName) {
         RandomAccessFile input = null;
         String line = null;
@@ -73,12 +77,23 @@ public class ListOfNumbers {
                 input.close();
             }
         }
+        
     }
+    */
     
     public static void main(String[] args) {
+    	/*
     	ListOfNumbers listOfNumbers = new ListOfNumbers("numberfile.txt");
     	ListOfNumbers.cat("numberfile.txt");
     	listOfNumbers.readList();
-    }
+    	*/
+    	
+    	ListOfNumbers listOfNumbers = new ListOfNumbers();
+    	listOfNumbers.createList();
+        for (int i = 0; i < listOfNumbers.getPairList().size(); i++) {
+            System.out.println(listOfNumbers.getPairList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
+            			+ " " + listOfNumbers.getPairList().get(i).getObj());
+        }
 
+    }
 }
