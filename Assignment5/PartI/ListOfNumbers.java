@@ -35,7 +35,41 @@ public class ListOfNumbers {
     }
     
     public void readList() {
+    	pairList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
+    	FileReader fr = null;
+    	BufferedReader br = null;
 
+    	try {
+    		fr = new FileReader(fileName);
+    	}
+    	catch(FileNotFoundException e) {
+			System.err.println("File not found: " + e.getMessage());
+			System.exit(1);
+    	}
+  
+    	br = new BufferedReader(fr);
+    	
+    	try {
+    		String curLine = br.readLine();
+    		while(curLine != null) {
+    			String[] nums = curLine.split(" ");
+    			System.out.println(nums[0] + ", " + nums[1] + ", " + nums[2]);
+    			try {
+    				pairList.add(new RDFTriple(Integer.parseInt(nums[0]),
+    											Integer.parseInt(nums[1]), Integer.parseInt(nums[2])));
+    			}
+    			catch (NumberFormatException nfe) {
+    				System.err.println("Number format problem: " + nfe.getMessage());
+    			}
+    			curLine = br.readLine();
+    		}
+    		fr.close();
+    	}
+    	catch (IOException e) {
+			System.err.println("Error reading file: " + e.getMessage());
+    	}
+    	
+    	
     }
     
     public void writeList() {
@@ -61,7 +95,7 @@ public class ListOfNumbers {
         }
     }
     
-    /*
+    
     public static void cat(String fileName) {
         RandomAccessFile input = null;
         String line = null;
@@ -72,28 +106,47 @@ public class ListOfNumbers {
                 System.out.println(line);
             }
             return;
-        } finally {
+        }
+        catch(FileNotFoundException fnfe) {
+        	System.out.println("File not found: " + fnfe.getMessage());
+        }
+        catch(IOException ioe) {
+        	System.out.println("I/O error: " + ioe.getMessage());
+        }
+        finally {
             if (input != null) {
-                input.close();
+                try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
         }
         
     }
-    */
+    
     
     public static void main(String[] args) {
     	/*
     	ListOfNumbers listOfNumbers = new ListOfNumbers("numberfile.txt");
     	ListOfNumbers.cat("numberfile.txt");
     	listOfNumbers.readList();
-    	*/
-    	
+        for (int i = 0; i < listOfNumbers.getPairList().size(); i++) {
+            System.out.println(listOfNumbers.getPairList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
+            			+ " " + listOfNumbers.getPairList().get(i).getObj());
+        }
+        
+    	ListOfNumbers lon = new ListOfNumbers("test.txt");
+    	lon.createList();
+    	lon.writeList();
+
     	ListOfNumbers listOfNumbers = new ListOfNumbers();
     	listOfNumbers.createList();
         for (int i = 0; i < listOfNumbers.getPairList().size(); i++) {
             System.out.println(listOfNumbers.getPairList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
             			+ " " + listOfNumbers.getPairList().get(i).getObj());
         }
+        */
 
     }
 }
