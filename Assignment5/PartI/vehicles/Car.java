@@ -5,6 +5,7 @@ public class Car extends Vehicle {
 
 	public Car() throws VehicleException{
 		super(4, "unknown", 0);
+		setDoors(4);
 	}
 
 	public Car(String color, double cargoSpace, int doors) throws VehicleException {
@@ -35,10 +36,8 @@ public class Car extends Vehicle {
 			return super.equals(o) && ((Car) o).getDoors() == this.getDoors();
 		}
 		
-		return false;
-		
+		return false;	
 	}
-
 
 	@Override
 	public String toString() {
@@ -51,8 +50,7 @@ public class Car extends Vehicle {
 			super.setWheels(wheels);
 		else{
 			throw new VehicleException("Number of car wheels must be 4");
-		}
-		
+		}	
 	}
 }
 	 

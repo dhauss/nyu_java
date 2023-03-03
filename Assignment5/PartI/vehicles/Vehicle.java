@@ -36,7 +36,6 @@ public class Vehicle {
 			this.wheels = wheels;
 		}
 		else {
-			this.wheels = 2;
 			throw new VehicleException("Vehicle must have at least 2 wheels");
 		}
 	}
@@ -61,7 +60,6 @@ public class Vehicle {
 		if(cargoSpace >= 0)
 			this.cargoSpace = cargoSpace;
 		else {
-			this.cargoSpace = 0;
 			throw new VehicleException("Vehicle cargo space must be nonnegative.");
 		}
 	}

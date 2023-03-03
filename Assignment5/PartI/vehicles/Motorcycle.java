@@ -73,7 +73,6 @@ public class Motorcycle extends Vehicle {
 		else{
 			throw new VehicleException("Number of motorcycle wheels must be 2");
 		}
-		
 	}
 
 	@Override
@@ -81,5 +80,4 @@ public class Motorcycle extends Vehicle {
 		return "Motorcycle [accessories=" + Arrays.toString(accessories) +
 				"] which is a subclass of " + super.toString();
 	}
-
 }

@@ -6,12 +6,12 @@ public class Bicycle extends Vehicle {
 
 	public Bicycle() throws VehicleException{
 		super(2, "unknown", 0);
-		this.isElectric = false;
+		setElectric(false);
 	}
 
 	public Bicycle(String color, boolean isElectric) throws VehicleException{
 		super(2, color, 0);
-		this.isElectric = isElectric;
+		setElectric(isElectric);
 	}
 
 	public String pedal() {
@@ -23,7 +23,6 @@ public class Bicycle extends Vehicle {
 		if(o instanceof Bicycle) {
 			return super.equals(o) && ((Bicycle) o).isElectric() == this.isElectric();
 		}
-		
 		return false;
 	}
 	

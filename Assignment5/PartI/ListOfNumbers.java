@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.List;
 import java.util.ArrayList;
  
 public class ListOfNumbers {
@@ -8,7 +7,6 @@ public class ListOfNumbers {
     private String fileName;
  
     public ListOfNumbers () {
-        // create an ArrayList of Pairs of Integers
     	rdfTripleList = new ArrayList<RDFTriple<Integer, Integer, Integer>>();
     	fileName = null;
     }
@@ -22,8 +20,7 @@ public class ListOfNumbers {
     		Integer number1 = (int) (Math.random()*10000);
     		Integer number2 = (int) (Math.random()*10000);
     		Integer number3 = (int) (Math.random()*10000);
-    		// fill the existing list with RDFTriple objects
-    		// of three numbers.
+
     		rdfTripleList.add(new RDFTriple<Integer, Integer, Integer>(number1, number2, number3));
     	}
     }
@@ -119,7 +116,7 @@ public class ListOfNumbers {
                 try {
 					input.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.err.println("File did not close: " + e.getMessage());
 				}
             }
         }
@@ -132,24 +129,9 @@ public class ListOfNumbers {
     	ListOfNumbers listOfNumbers = new ListOfNumbers("numberfile.txt");
     	ListOfNumbers.cat("numberfile.txt");
     	listOfNumbers.readList();
-    	
-        /*for (int i = 0; i < listOfNuetrdfTripleList().size(); i++) {
-            System.out.println(listOfNumbers.getrdfTripleList().get(i).getSubj() + " " + listOfNumbers.getPairList().get(i).getPred()
-            			+ " " + listOfNumbers.getrdfTripleList().get(i).getObj());
-        }
         
     	ListOfNumbers lon = new ListOfNumbers("test.txt");
     	lon.createList();
     	lon.writeList();
-		
-		/*
-    	ListOfNumbers listOfNumbers = new ListOfNumbers();
-    	listOfNumbers.createList();
-        for (int i = 0; i < listOfNumbers.getrdfTripleList().size(); i++) {
-            System.out.println(listOfNumbers.getrdfTripleList().get(i).getSubj() + " " + listOfNumbers.getrdfTripleList().get(i).getPred()
-            			+ " " + listOfNumbers.getrdfTripleList().get(i).getObj());
-        }
-        */
-
     }
 }

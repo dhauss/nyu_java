@@ -6,7 +6,6 @@ public class CargoCycle extends Bicycle{
 		super();
 		setElectric(false);
 	}
-
 	
 	public CargoCycle(String color, double cargoSpace, int wheels, boolean isElectric)  throws VehicleException{
 		super(color, isElectric);
@@ -16,9 +15,9 @@ public class CargoCycle extends Bicycle{
 
 	@Override
 	public boolean equals(Object o) {
-		if(o instanceof CargoCycle)
+		if(o instanceof CargoCycle) {
 			return super.equals(o);
-		
+		}
 		return false;
 	}
 
@@ -26,5 +25,4 @@ public class CargoCycle extends Bicycle{
 	public String toString() {
 		return "CargoCycle [] which is a subclass of " + super.toString();
 	}
-	
 }
