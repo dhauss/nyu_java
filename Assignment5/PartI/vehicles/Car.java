@@ -35,7 +35,6 @@ public class Car extends Vehicle {
 		if(o instanceof Car) {
 			return super.equals(o) && ((Car) o).getDoors() == this.getDoors();
 		}
-		
 		return false;	
 	}
 

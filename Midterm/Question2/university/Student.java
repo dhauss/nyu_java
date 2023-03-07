@@ -1,5 +1,7 @@
 package university;
 
+import java.util.Objects;
+
 public abstract class Student extends Person {
 	private String department;
 
@@ -11,6 +13,18 @@ public abstract class Student extends Person {
 	public Student(String name, int age, String department) {
 		super(name, age);
 		setDepartment(department);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		return this.getDepartment().equalsIgnoreCase(other.getDepartment());
 	}
 
 	@Override
