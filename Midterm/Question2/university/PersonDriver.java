@@ -22,7 +22,6 @@ public class PersonDriver {
 		Faculty broPro = new Faculty("bro pro", 987, 12344, "bro pro king", true, "Anthro");
 		Faculty broPro2 = new Faculty("bro pro", 987, 12344, "bro pro king", true, "AntHro");
 
-		
 		//System.out.println(jonjayGrad.equals(jonjay));
 		
 		ArrayList<Employee> al = new ArrayList<>();
@@ -33,8 +32,11 @@ public class PersonDriver {
 		al.add(bro);
 		al.add(broPro);
 		
-		
 		Person.printPersons(al);
+		
+		Lamb lamb = (double x, double y) -> x + y;
+		
+		System.out.println(lamb.abs(broPro.getSalary(), broPro2.getSalary()));
 
 	}
 
