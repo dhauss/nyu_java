@@ -58,7 +58,6 @@ public class ComplexMatrix {
 			return new ComplexMatrix(res);
 		}
 		
-		
 		public ComplexMatrix mult(ComplexMatrix cm) throws MatrixDimensionException {
 			if(this.getCols() != cm.getRows())
 				throw new MatrixDimensionException("Incompatible Matrix Dimensions for Multiplication");
@@ -185,7 +184,6 @@ public class ComplexMatrix {
 			this.matrix = matrix;
 		}
 		
-		
 		public int getRows() {
 			return rows;
 		}
@@ -201,8 +199,4 @@ public class ComplexMatrix {
 		public void setCols(int cols) {
 			this.cols = cols;
 		}
-
-	public static void main(String[] args) {
-
-	}
 }
