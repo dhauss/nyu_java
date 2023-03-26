@@ -46,7 +46,5 @@ public class MyStack<E> {
 			return i;
 		else
 			return ar.size() - ar.indexOf(o);
-	}
-		
-	
+	}	
 }
