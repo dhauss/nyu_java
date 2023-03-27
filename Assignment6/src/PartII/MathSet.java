@@ -3,17 +3,35 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MathSet<E> extends HashSet<E> {
+	
+    public MathSet() {
+		super();
+	}
+	
 	public Set<E> intersection(Set<E> s2) {
-
-        
+		Set<E> res = new HashSet<>();
+		
+		for(E element: (Set<E>) super.clone()) {
+			res.add(element);
+		}
+		
+		res.retainAll(s2);
+        return res;
     }
     
     public Set<E> union(Set<E> s2) {
-
+		Set<E> res = new HashSet<>();
+		
+		for(E element: (Set<E>) super.clone()) {
+			res.add(element);
+		}
+		
+		res.addAll(s2);
+		return res;
     }
-    
-    public <T> Set<Pair<E,T>> cartesianProduct(Set<T> s2) {
-            
+
+	public <T> Set<Pair<E,T>> cartesianProduct(Set<T> s2) {
+        return null;  
 
     }
     
@@ -35,10 +53,13 @@ public class MathSet<E> extends HashSet<E> {
 		s2.add(4);
 		s2.add(6);
 		s2.add(8);
+		
 		System.out.println(s1.intersection(s2));
+
 		System.out.println(s1.union(s2));
 
-		System.out.println(s1.cartesianProduct(s2));
+		//System.out.println(s1.cartesianProduct(s2));
+		
 		
 	}
 }
