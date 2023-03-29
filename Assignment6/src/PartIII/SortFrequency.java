@@ -25,7 +25,7 @@ public class SortFrequency {
             
             //create count hashMap
             for(int num: ar) {
-            	if((countHash.containsKey(num))) {
+            	if(countHash.containsKey(num)) {
             		int count = countHash.get(num);
             		count++;
             		countHash.put(num, count);
