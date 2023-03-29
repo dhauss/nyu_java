@@ -49,15 +49,10 @@ public class ImagePanel extends JPanel{
     	super.paintComponent(g);
 
     	if(hasDie) {
-	    	die = (int)(Math.random()*6) + 1;
-	    	result += die;
-	    	try {
-				img = ImageIO.read(new File(DIE_ARRAY[die]));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-	    	
-	    	g.drawImage(img, 50, 0, null);
+    		die = (int)(Math.random()*6) + 1;
+    		img = new ImageIcon(DIE_ARRAY[die]).getImage();
+    		g.drawImage(img, 50, 0, null);
+    		result += die;
     	}
     	else {
     		for(int i = 0; i < rows + 1; i++) {
