@@ -9,13 +9,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class ImagePanel extends JPanel{
-    private Image img;
-    private boolean hasDie;
-	private int die = (int)(Math.random()*6) + 1;
-	private static int result;
+	private static final long serialVersionUID = 1L;
+
 	private final String[] DIE_ARRAY = {
 			"", "die1.png", "die2.png", "die3.png",
 			"die4.png", "die5.png", "die6.png"};		//1-indexing for convenience
+	
+    private Image img;
+    private boolean hasDie;
+	private int die;
+	private static int result;
 	
 	private final int rows = 5;
 	private final int cols = 5;
@@ -47,8 +50,8 @@ public class ImagePanel extends JPanel{
 			g.drawImage(img, 50, 0, null);
 			die = (int)(Math.random()*6) + 1;
 			img = new ImageIcon(DIE_ARRAY[die]).getImage();
-    		result += die;
-    	}
+			result += die;
+		}
     	else {
     		for(int i = 0; i < rows + 1; i++) {
     			g.setColor(new Color(0, 0 , 255));
