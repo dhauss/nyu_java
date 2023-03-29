@@ -54,7 +54,6 @@ public class RollDice extends JFrame {
 		gridPanel.setBackground(Color.WHITE);
 		mainPanel.add(gridPanel);
 		
-		
 		JPanel buttonPanel = new JPanel();
 		JButton button = new JButton("roll dice");
 		button.addActionListener(buttonListener);
@@ -62,8 +61,6 @@ public class RollDice extends JFrame {
 		buttonPanel.add(button);
 		mainPanel.add(buttonPanel);
 		
-		
-		mainPanel.setFocusable(true);
 		this.add(mainPanel);
 	}
 
