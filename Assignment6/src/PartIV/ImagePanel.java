@@ -14,12 +14,12 @@ public class ImagePanel extends JPanel{
 	private final String[] DIE_ARRAY = {
 			"", "die1.png", "die2.png", "die3.png",
 			"die4.png", "die5.png", "die6.png"};		//1-indexing for convenience
-	
+
     private Image img;
     private boolean hasDie;
 	private int die;
 	private static int result;
-	
+
 	private final int rows = 5;
 	private final int cols = 5;
 	private final int oX = 175;
@@ -27,7 +27,7 @@ public class ImagePanel extends JPanel{
 	private final int sideLength = 30;
 	private static int x = 167;
 	private static int y = 73;
-    
+	
     public ImagePanel(String img, boolean hasDie) {
             this(new ImageIcon(img).getImage(), hasDie);
     }
