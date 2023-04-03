@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,9 @@ public class BruteForceAttack {
 		return letters[i];
 		
 	}
+	public static int numfound;
+	private static Object numfoundLock = new Object();
+	public Object digestLock = new Object();
 	
 	public static String bytesToHex(byte[] hash) {
 	    StringBuilder hexString = new StringBuilder(2 * hash.length);
@@ -44,7 +48,7 @@ public class BruteForceAttack {
 	}
 	
 	public static Set<String> hashedpasswords(String filename) {
-		Set<String> hashSet = new HashSet<String>();
+		Set<String> hashSet = Collections.synchronizedSet(new HashSet<String>());
 		try {
 			FileReader fr = new FileReader("hashedpassword.txt");
 			BufferedReader br = new BufferedReader(fr);
@@ -57,21 +61,15 @@ public class BruteForceAttack {
 			
 		}
 		return hashSet;
-		
 	}
-	public static void main(String[] args) throws NoSuchAlgorithmException {
-		Set<String> passwordSet = hashedpasswords("hashedpassword.txt");
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		int numfound = 0;
-		int len = 5;
-		
-		double max = Math.pow(26, len);
+	
+	public static void threadWork(int len, int min, int max, MessageDigest digest, Set<String> passwordSet) {
 		byte[] pass = new byte[len];
 		for (int k = 0;k<pass.length ;k++) {
 			pass[k] = startLower;
 		}
 		
-		for (long j=0 ; j < max ;j++) { 
+		for (long j=min ; j < max ;j++) { 
 			int v = (int)(j % 26L);
 			if ((v == 0) && (j!=0)) {
 				
@@ -95,18 +93,49 @@ public class BruteForceAttack {
 				pass[0] = (byte)letters[v];
 			}
 			
-			byte[] encodedhash = digest.digest(pass);
-					
-			String hashpass = BruteForceAttack.bytesToHex(encodedhash);
-			if (passwordSet.contains(hashpass)) {
-				String passString = new String(pass);
-				System.out.println("found password " + passString);
-				numfound++;
+			synchronized(numfoundLock) {
+				byte[] encodedhash = digest.digest(pass);
+				String hashpass = BruteForceAttack.bytesToHex(encodedhash);
+				if (passwordSet.contains(hashpass)) {
+					String passString = new String(pass);
+					System.out.println("found password " + passString);
+						numfound++;
+				}
 			}
-			//System.out.println(new String(pass));
 		}
-			
+	}
+	
+	
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		Set<String> passwordSet = hashedpasswords("hashedpassword.txt");
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+		numfound = 0;
+		int len = 5;
+		double max = Math.pow(26, len);
+		long start = System.currentTimeMillis();		
 		
+		//thread goes here, split into max divided by Runtime.getRuntime().availableProcessors()
+		//put whole function into a thread, min/max gets replaced with each thread
+		
+		Runnable r1 = () -> threadWork(len, 0, (int)max/2, digest, passwordSet);
+		Runnable r2 = () -> threadWork(len, ((int)max/2) + 1, (int)max, digest, passwordSet);
+		Thread t1 = new Thread(r1);
+		Thread t2 = new Thread(r2);
+		t1.start();
+		t2.start();
+
+		
+		try {
+			t1.join();
+			t2.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		
+		long end = System.currentTimeMillis();
 		System.out.println("found " + numfound + " out of " + passwordSet.size());
+		System.out.println(end - start);
 	}
 }
