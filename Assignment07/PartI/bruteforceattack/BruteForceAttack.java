@@ -9,6 +9,29 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+/* My computer: 2.4 GHz Quad-Core Intel Core i5 2019 13", with hyperthreading
+ * Runtime.getRuntime().availableProcessors() shows 8 available processors 
+ * 
+ * Brute force on 5 char passwords: about 16.3-16.5 seconds to find 4772 passwords
+ * 
+ * Max number of productive threads: 2 threads roughly halved the time and 3 shaved off another second
+ * or so. With 4 threads the program runs consistently at about 4.5 to 5 seconds. Between 5-8 I would
+ * sometimes see slightly better results, down to about 4.3 seconds, and some of the improvement is
+ * likely due to efficient hyperthreading, but some is certainly related to what was running in the
+ * background and scheduling at the Mac OS level. At 9+ threads, overhead from thread creation led
+ * to runtimes around 5 seconds and above, which is to be expected given my computer has 4 physical
+ * cores, with a virtual 8 thanks to hyperthreading. 4-8 threads seems to be the sweet spot, 6 seemed
+ * to strike a consistently good balance, but without testing the program more empirically and dooming
+ *  my SSD to an early death, it was hard to establish a definitively best number of threads. Anything
+ *  between 4-8 will produce consistently good results.
+ *  
+ *  6 char passwords: A single thread took nearly 400 seconds to find 13,549 passwords. 4 threads improved
+ *  the time to 128.916 seconds, and 8 came in slightly better at 128.336 seconds, but again the improvement
+ *  due to hyperthreading vs the improvement due to scheduling luck is difficult to establish without
+ *  running at least a few dozen tests.
+ * 
+ */
+
 public class BruteForceAttack {
 
 	static final char startLower = 'a';
@@ -48,6 +71,7 @@ public class BruteForceAttack {
 	}
 	
 	public static Set<String> hashedpasswords(String filename) {
+		//synchronized for good measure
 		Set<String> hashSet = Collections.synchronizedSet(new HashSet<String>());
 		try {
 			FileReader fr = new FileReader("hashedpassword.txt");
@@ -64,28 +88,18 @@ public class BruteForceAttack {
 	}
 	
 	public static void threadWork(int len, long min, long max, MessageDigest digest, Set<String> passwordSet) {
-		//initialize pass based on thread's min
-		byte[] pass = new byte[5];
+		//initialize local pass[] based on thread's min
+		byte[] pass = new byte[len];
 		for (int k = 0;k<pass.length ;k++) {
 			double num = ((min/(Math.pow(26, k))))%26;
 			pass[k] = (byte)letters[(int)num];
 		}
-		/*		pass debug
-		for (int k = 0;k<pass.length ;k++) {
-			System.out.print((char)pass[k]);
-		}
-		System.out.println();
-		*/
 		
 		for (long j=min ; j < max ;j++) { 
-			//get an int between 0 and 26 (letters in alphabet) from j
 			int v = (int)(j % 26L);
-			//when j = 26 and v = 0
 			if ((v == 0) && (j!=0)) {
-				//pw starts with a
 				pass[0] = startLower;
 				for (int k = 1;k<pass.length ;k++) {
-					//If pass[k] = reset to a
 					if (pass[k] == 'z') {
 						if (k != pass.length-1) {
 							pass[k] = startLower;
@@ -93,7 +107,6 @@ public class BruteForceAttack {
 						} else {
 							break;
 						}
-						//otherwise get the a, increment and reset pass[k] to b? because pass is shared between loop! need to initialize it correctly between loops
 					} else {
 						int val = getInt((char)pass[k]);
 						val++;
@@ -101,7 +114,6 @@ public class BruteForceAttack {
 						break;
 					}
 				} 
-				//otherwise just use the letter of v 0 > v > 26
 			} else {
 				pass[0] = (byte)letters[v];
 			}
@@ -120,48 +132,38 @@ public class BruteForceAttack {
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		Set<String> passwordSet = hashedpasswords("hashedpassword.txt");
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		MessageDigest digest2 = MessageDigest.getInstance("SHA-256");
-		MessageDigest digest3 = MessageDigest.getInstance("SHA-256");
-		MessageDigest digest4 = MessageDigest.getInstance("SHA-256");
-
-
 		numfound = 0;
-		int len = 5;
+		int len = 6;
 		double max = Math.pow(26, len);
-		long start = System.currentTimeMillis();	
+		double time_start = System.currentTimeMillis();	
+		int numThreads = 8;
 		
-		//thread goes here, split into max divided by Runtime.getRuntime().availableProcessors()
-		//put whole function into a thread, min/max gets replaced with each thread
-		
-		Runnable r1 = () -> threadWork(len, 0, (long)(max/4), digest, passwordSet);
-		Runnable r2 = () -> threadWork(len, (long)(max/4), (long)(max/2), digest2, passwordSet);
-		Runnable r3 = () -> threadWork(len, (long)(max/2), 3 *(long)(max/4), digest3, passwordSet);
-		Runnable r4 = () -> threadWork(len, 3 *(long)(max/4), (long)max, digest4, passwordSet);
-
-		Thread t1 = new Thread(r1);
-		Thread t2 = new Thread(r2);
-		Thread t3 = new Thread(r3);
-		Thread t4 = new Thread(r4);
-
-		t1.start();
-		t2.start();
-		t3.start();
-		t4.start();
-
-		try {
-			t1.join();
-			t2.join();
-			t3.join();
-			t4.join();
-
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		Thread[] threads = new Thread[numThreads];
+		for(int i = 0; i < numThreads; i++) {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			long begin = i * (long)(max/numThreads);
+			long end = (i + 1) * (long)(max/numThreads);
+			//long arithmetic caused uneven numThread to miss last few passwords
+			Runnable r = null;
+			if(i == numThreads - 1) {
+				r = () -> threadWork(len, begin, (long)Math.pow(26, len), digest, passwordSet);
+			}
+			else {
+				r = () -> threadWork(len, begin, end, digest, passwordSet);
+			}
+			threads[i] = new Thread(r);
+			threads[i].start();
 		}
-
+		for(Thread thread: threads) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		
-		long end = System.currentTimeMillis();
-		System.out.println("found " + numfound + " out of " + passwordSet.size());
-		System.out.println(end - start);
+		long time_end = System.currentTimeMillis();
+		System.out.println("found " + numfound + " out of " + passwordSet.size()
+							+ " in " + (time_end - time_start)/1000 + " seconds.");
 	}
 }
