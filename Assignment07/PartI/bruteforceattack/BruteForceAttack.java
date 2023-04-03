@@ -133,10 +133,10 @@ public class BruteForceAttack {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		Set<String> passwordSet = hashedpasswords("hashedpassword.txt");
 		numfound = 0;
-		int len = 6;
+		int len = 5;
 		double max = Math.pow(26, len);
 		double time_start = System.currentTimeMillis();	
-		int numThreads = 8;
+		int numThreads = 4;
 		
 		Thread[] threads = new Thread[numThreads];
 		for(int i = 0; i < numThreads; i++) {
@@ -146,7 +146,7 @@ public class BruteForceAttack {
 			//long arithmetic caused uneven numThread to miss last few passwords
 			Runnable r = null;
 			if(i == numThreads - 1) {
-				r = () -> threadWork(len, begin, (long)Math.pow(26, len), digest, passwordSet);
+				r = () -> threadWork(len, begin, (long)max, digest, passwordSet);
 			}
 			else {
 				r = () -> threadWork(len, begin, end, digest, passwordSet);
