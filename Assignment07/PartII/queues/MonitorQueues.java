@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * and removes that same integer to assign to m2.outObj, the generalPurposeQueue will now be empty. If m2 now
  * blocks and m1 starts again before the Producer thread runs, m1 will continue to line 26 and remove an
  * object from an empty queue, and "in.remove()" will throw a NoSuchElementException.
+ * 
  * A NullPointerException will occur if m1 runs the first half of line 25 ((in.peek() != null) and then
  * immediately blocks in a similar scenario. m2 then removes the last element from the generalPurposeQueue
  * and m1 resumes at (isInstance(in.peek().getClass())) on a now empty generalPurposeQueue. in.peek() will
@@ -27,11 +28,11 @@ Q2
  * line 43 and get the size of the generalPurposeQueue, immediately block, then the middleman threads may
  * run for awhile and take some elements off of the generalPurposeQueue. When p wakes back up, the count
  * it received will be outdated before it adds a string or integer to the generalPurposeQueue. The true
- * current size of generalPurposeQueue will only ever be less than or equal to the outdated count given
- * by out.size() whenever p reawakens, though, because no matter what other threads run, they will only
+ * current size of generalPurposeQueue will only ever be less than or equal to the outdated out.size() count 
+ * whenever p reawakens, though, because no matter what other threads run, they will only
  * ever remove elements from generalPurposeQueue, or in the case of Consumer threads, only remove elements
  * from the integer or string queues and leave the generalPurposeQueue untouched. The block from lines
- * 43-57 would only need to be synchronized if there were more than one producer threads in MonitorQueues.
+ * 43-57 would only need to be synchronized if there were more than one producer thread in MonitorQueues.
 
 Q3 
  * I synchronized lines 56-66 on the out queue to fix this. line 56 "if (out.size() >= 10)" implicitly
@@ -42,7 +43,7 @@ Q3
  * and trigger the alert "Alert. Queue 1  > 10. Shouldn't happen". A symmetrical situation can of course
  * occur with m3, m4 and the StringQueue, leading to the alert "Alert. Queue 2 > 10. Shouldn't happen".
  * By making lines 56-66 an atomic operation, we can ensure that the "if (out.size() >= 10)" check remains
- * current until the thread places a new object on the out queue
+ * current until the thread places a new object on its respective out queue
  */
 
 public class MonitorQueues implements Runnable {
