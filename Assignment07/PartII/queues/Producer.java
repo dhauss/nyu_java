@@ -1,7 +1,6 @@
 package queues;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ public class Producer implements Runnable {
 				words.add(inLine);
 				inLine = r.readLine();
 			}
+			r.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

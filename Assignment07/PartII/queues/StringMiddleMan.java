@@ -10,7 +10,7 @@ public class StringMiddleMan extends MiddleMan {
 	}
 
 	@Override
-	public boolean isInstance(Class clazz) {
+	public boolean isInstance(Class<?> clazz) {
 		/* this is similar to (obj instanceof String) for all intents
 		 * and purposes
 		 */

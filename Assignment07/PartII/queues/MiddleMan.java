@@ -1,8 +1,6 @@
 package queues;
 
 import java.util.Queue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class MiddleMan implements Runnable {
 
@@ -17,7 +15,7 @@ public abstract class MiddleMan implements Runnable {
 		outObj = null;
 	}
 	
-	public abstract boolean isInstance(Class clazz);
+	public abstract boolean isInstance(Class<?> clazz);
 	
 	@Override
 	public void run() {

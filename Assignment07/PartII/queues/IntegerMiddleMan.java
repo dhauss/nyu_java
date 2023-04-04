@@ -10,7 +10,7 @@ public class IntegerMiddleMan extends MiddleMan {
 	}
 
 	@Override
-	public boolean isInstance(Class clazz) {
+	public boolean isInstance(Class<?> clazz) {
 		/* this is similar to (obj instanceof Integer) for all intents
 		 * and purposes
 		 */

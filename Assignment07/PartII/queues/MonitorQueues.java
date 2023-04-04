@@ -39,7 +39,10 @@ Q3
  * integerQueue or stringQueue). If these lines are not synchronized, m1 may check line 56 and conclude
  * that the out queue is small enough to add to. If it immediately blocks and m2 adds the 10th element
  * to the same out queue before m1 wakes up and offers its outObj, the integerQueue will have 11 elements
- * and trigger the alert "Alert. Queue 1  > 10. Shouldn't happen".
+ * and trigger the alert "Alert. Queue 1  > 10. Shouldn't happen". A symmetrical situation can of course
+ * occur with m3, m4 and the StringQueue, leading to the alert "Alert. Queue 2 > 10. Shouldn't happen".
+ * By making lines 56-66 an atomic operation, we can ensure that the "if (out.size() >= 10)" check remains
+ * current until the thread places a new object on the out queue
  */
 
 public class MonitorQueues implements Runnable {
