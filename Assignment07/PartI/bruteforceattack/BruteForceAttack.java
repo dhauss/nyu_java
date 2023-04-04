@@ -9,8 +9,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/* My computer: 2.4 GHz Quad-Core Intel Core i5 2019 13", with hyperthreading
+/* My computer: 2.4 GHz Quad-Core Intel Core i5 2019 13".
  * Runtime.getRuntime().availableProcessors() shows 8 available processors 
+ * due to hyperthreading capacity
  * 
  * Brute force on 5 char passwords: about 16.3-16.5 seconds to find 4772 passwords
  * 
@@ -20,10 +21,10 @@ import java.util.Set;
  * likely due to efficient hyperthreading, but some is certainly related to what was running in the
  * background and scheduling at the Mac OS level. At 9+ threads, overhead from thread creation led
  * to runtimes around 5 seconds and above, which is to be expected given my computer has 4 physical
- * cores, with a virtual 8 thanks to hyperthreading. 4-8 threads seems to be the sweet spot, 6 seemed
+ * cores, with another virtual 4 thanks to hyperthreading. 4-8 threads seems to be the sweet spot, 6 seemed
  * to strike a consistently good balance, but without testing the program more empirically and dooming
- *  my SSD to an early death, it was hard to establish a definitively best number of threads. Anything
- *  between 4-8 will produce consistently good results.
+ * my SSD to an early death, it was hard to establish a definitively best number of threads. Anything
+ * between 4-8 will produce consistently good results between 4.5-5 seconds.
  *  
  *  6 char passwords: A single thread took nearly 400 seconds to find 13,549 passwords. 4 threads improved
  *  the time to 128.916 seconds, and 8 came in slightly better at 128.336 seconds, but again the improvement
@@ -123,10 +124,10 @@ public class BruteForceAttack {
 					System.out.println("found password " + passString);
 					synchronized(numfoundLock) {
 						numfound++;
+					}
 				}
 			}
 		}
-	}
 
 	public static int getNumfound() {
 		return numfound;
