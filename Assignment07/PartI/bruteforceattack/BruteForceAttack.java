@@ -81,6 +81,7 @@ public class BruteForceAttack {
 				hashSet.add(inline);
 				inline = br.readLine();
 			}
+			br.close();
 		} catch (Exception e) {
 			
 		}
