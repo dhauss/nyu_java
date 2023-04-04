@@ -9,14 +9,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/* My computer: 2.4 GHz Quad-Core Intel Core i5 2019 13".
+/* 
+ My computer:
+ * 2.4 GHz Quad-Core Intel Core i5 2019 13".
  * Runtime.getRuntime().availableProcessors() shows 8 available processors 
  * due to hyperthreading capacity
- * 
- * Brute force on 5 char passwords: about 16.3-16.5 seconds to find 4772 passwords
- * 
- * Max number of productive threads: 2 threads roughly halved the time and 3 shaved off another second
- * or so. With 4 threads the program runs consistently at about 4.5 to 5 seconds. Between 5-8 I would
+  
+ Brute force on 5 char passwords:
+ * About 16.3-16.5 seconds to find 4772 passwords
+  
+ Max number of productive threads:
+ * 2 threads roughly halved the time and 3 shaved off another second or so.
+ * With 4 threads the program runs consistently at about 4.5 to 5 seconds. Between 5-8 I would
  * sometimes see slightly better results, down to about 4.3 seconds, and some of the improvement is
  * likely due to efficient hyperthreading, but some is certainly related to what was running in the
  * background and scheduling at the Mac OS level. At 9+ threads, overhead from thread creation led
@@ -25,12 +29,12 @@ import java.util.Set;
  * to strike a consistently good balance, but without testing the program more empirically and dooming
  * my SSD to an early death, it was hard to establish a definitively best number of threads. Anything
  * between 4-8 will produce consistently good results between 4.5-5 seconds.
- *  
- *  6 char passwords: A single thread took nearly 400 seconds to find 13,549 passwords. 4 threads improved
- *  the time to 128.916 seconds, and 8 came in slightly better at 128.336 seconds, but again the improvement
- *  due to hyperthreading vs the improvement due to scheduling luck is difficult to establish without
- *  running at least a few dozen tests.
- * 
+   
+ 6 char passwords:
+ * A single thread took nearly 400 seconds to find 13,549 passwords. 4 threads improved
+ * the time to 128.916 seconds, and 8 came in slightly better at 128.336 seconds, but again the improvement
+ * due to hyperthreading vs the improvement due to scheduling luck is difficult to establish without
+ * running at least a few dozen tests.
  */
 
 public class BruteForceAttack {

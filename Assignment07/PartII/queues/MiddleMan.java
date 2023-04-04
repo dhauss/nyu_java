@@ -46,9 +46,7 @@ public abstract class MiddleMan implements Runnable {
 						
 						e.printStackTrace();
 					} 
-				}
-				
-
+				}	
 				/* if it turns out the output queue has somehow
 				 * become larger than 10 again, start all over again,
 				 * but keep our output object, otherwise put the
