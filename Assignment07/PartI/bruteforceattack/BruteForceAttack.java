@@ -42,9 +42,8 @@ public class BruteForceAttack {
 		return letters[i];
 		
 	}
-	public static int numfound;
+	private static int numfound;
 	private static Object numfoundLock = new Object();
-	public Object digestLock = new Object();
 	
 	public static String bytesToHex(byte[] hash) {
 	    StringBuilder hexString = new StringBuilder(2 * hash.length);
@@ -91,8 +90,8 @@ public class BruteForceAttack {
 		//initialize local pass[] based on thread's min
 		byte[] pass = new byte[len];
 		for (int k = 0;k<pass.length ;k++) {
-			double num = ((min/(Math.pow(26, k))))%26;
-			pass[k] = (byte)letters[(int)num];
+			double i = ((min/(Math.pow(26, k))))%26;
+			pass[k] = (byte)letters[(int)i];
 		}
 		
 		for (long j=min ; j < max ;j++) { 
@@ -128,11 +127,18 @@ public class BruteForceAttack {
 			}
 		}
 	}
-	
-	
+
+	public static int getNumfound() {
+		return numfound;
+	}
+
+	public static void setNumfound(int numfound) {
+		BruteForceAttack.numfound = numfound;
+	}
+
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		Set<String> passwordSet = hashedpasswords("hashedpassword.txt");
-		numfound = 0;
+		setNumfound(0);
 		int len = 5;
 		double max = Math.pow(26, len);
 		double time_start = System.currentTimeMillis();	
@@ -163,7 +169,7 @@ public class BruteForceAttack {
 		}
 		
 		long time_end = System.currentTimeMillis();
-		System.out.println("found " + numfound + " out of " + passwordSet.size()
+		System.out.println("found " + getNumfound() + " out of " + passwordSet.size()
 							+ " in " + (time_end - time_start)/1000 + " seconds.");
 	}
 }
