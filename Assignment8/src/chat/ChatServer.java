@@ -4,10 +4,10 @@ package chat;
 import java.awt.TextArea;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.Instant;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -17,13 +17,12 @@ import javax.swing.JScrollPane;
 
 public class ChatServer extends JFrame implements Runnable {
 
+	private static final long serialVersionUID = 1L;
 	private static int WIDTH = 400;
 	private static int HEIGHT = 300;
 	private TextArea textArea;
-	private ObjectOutputStream outputToBroadcast;
-	private DataInputStream inputFromClient;
+	private ArrayList<ClientThread> clientThreads = new ArrayList<>();
 
-	
 	public ChatServer() {
 		super("Chat Server");
 		this.setSize(ChatServer.WIDTH, ChatServer.HEIGHT);
@@ -48,18 +47,21 @@ public class ChatServer extends JFrame implements Runnable {
 	     while (true) {
 	    	 Socket socket;
 	         try {
-				socket = serverSocket.accept();			    
-				inputFromClient = new DataInputStream(socket.getInputStream());
-
-			    String in = inputFromClient.readUTF();
-			    System.out.println(in);
-			    textArea.append("\n" + in); 
+				socket = serverSocket.accept();
+				textArea.append(
+						"\nStarting thread for client " + (clientThreads.size() + 1) + " at " + Instant.now()
+				);
+				ClientThread newClient = new ClientThread(socket, clientThreads.size() + 1);
+				clientThreads.add(newClient);
+				newClient.start();
+				
 			 } catch (IOException e1) {
 				e1.printStackTrace();
-			}
+			 	}
+	         
 	       }
 	}
-	
+
 	private void createMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("File");
@@ -69,7 +71,7 @@ public class ChatServer extends JFrame implements Runnable {
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
 	}
-	
+
 
 	public static void main(String[] args) {
 		ChatServer chatServer = new ChatServer();
@@ -78,6 +80,30 @@ public class ChatServer extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		
+	}
+	
+	public class ClientThread extends Thread {
+		private Socket socket;
+		private int id;
+		
+		public ClientThread(Socket socket, int id) {
+			this.socket = socket;
+			this.id = id;
+		}
+		
+		public void run() {
+			DataInputStream inputFromClient;
+				try {
+					inputFromClient = new DataInputStream(socket.getInputStream());
+					while(true) {
+					    String in = inputFromClient.readUTF();
+					    textArea.append("\n" + id + ": " + in);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 	}
 }
 
