@@ -44,7 +44,7 @@ public class ChatServer extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	     
+
 	     while (true) {
 	    	 Socket socket;
 	         try {
@@ -56,7 +56,7 @@ public class ChatServer extends JFrame {
 				ClientThread newClient = new ClientThread(socket, this, clientThreads.size() + 1);
 				clientThreads.add(newClient);
 				newClient.start();
-				
+
 			 } catch (IOException e1) {
 				e1.printStackTrace();
 			 	}
@@ -72,7 +72,7 @@ public class ChatServer extends JFrame {
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
 	}
-	
+
 	public void broadcast(String message, int excludeIndex) {
 		for(ClientThread client: clientThreads) {
 			if(client != null && client != clientThreads.get(excludeIndex)) {
@@ -84,14 +84,14 @@ public class ChatServer extends JFrame {
 	public static void main(String[] args) {
 		ChatServer chatServer = new ChatServer();
 	}
-	
+
 	public class ClientThread extends Thread {
 		private Socket socket;
 		private ChatServer server;
 		DataInputStream inputFromClient;
 		DataOutputStream toServer;
 		private int id;
-		
+
 		public ClientThread(Socket socket, ChatServer server, int id) {
 			this.socket = socket;
 			this.server = server;
@@ -108,7 +108,7 @@ public class ChatServer extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		
+
 		public void run() {
 				try {
 					while(true) {
@@ -135,5 +135,3 @@ public class ChatServer extends JFrame {
 		}
 	}
 }
-
-

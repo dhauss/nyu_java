@@ -19,7 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 
 
-public class ChatClient extends JFrame implements Runnable {
+public class ChatClient extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static int WIDTH = 400;
 	private static int HEIGHT = 300;
@@ -41,11 +41,7 @@ public class ChatClient extends JFrame implements Runnable {
 		this.add(scroll);
 		this.setVisible(true);
 	}
-	
-	public void run() {
-		
-	}
-	
+
 	private void createMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("File");
@@ -87,9 +83,8 @@ public class ChatClient extends JFrame implements Runnable {
 			}
 		}
 	}
-	
-	private class ExitListener implements ActionListener {
 
+	private class ExitListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
@@ -109,7 +104,6 @@ public class ChatClient extends JFrame implements Runnable {
 				textArea.append(" ");	//fixes bug where sending a carriage return alone resends last line of text
 				String[] lines = textArea.getText().split("\n");
 				String message = lines[lines.length - 1];
-
 				try {
 					toServer.writeUTF(message);
 				} catch (UnknownHostException e1) {
@@ -122,14 +116,14 @@ public class ChatClient extends JFrame implements Runnable {
 
 		@Override
 		public void keyTyped(KeyEvent e) {}
-		
+
 		@Override
 		public void keyReleased(KeyEvent e) {}
 	}
-	
+
 	private class ReadThread extends Thread{
 		DataInputStream inputFromClient;
-		
+
 		public ReadThread() {
 			try {
 				inputFromClient = new DataInputStream(socket.getInputStream());
@@ -137,7 +131,7 @@ public class ChatClient extends JFrame implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+
 		public void run() {
 			try {
 				while(true) {
@@ -147,7 +141,6 @@ public class ChatClient extends JFrame implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 
