@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -19,6 +20,7 @@ import javax.swing.JScrollPane;
 
 
 public class ChatClient extends JFrame implements Runnable {
+	private static final long serialVersionUID = 1L;
 	private static int WIDTH = 400;
 	private static int HEIGHT = 300;
 	private TextArea textArea;
@@ -51,7 +53,7 @@ public class ChatClient extends JFrame implements Runnable {
 		menu.add(connectItem);
 		connectItem.addActionListener(new ConnectListener());
 		JMenuItem exitItem = new JMenuItem("Exit");
-		exitItem.addActionListener((e) -> System.exit(0));
+		exitItem.addActionListener(new ExitListener());
 		menu.add(exitItem);
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
@@ -76,12 +78,27 @@ public class ChatClient extends JFrame implements Runnable {
 					toServer = new DataOutputStream(socket.getOutputStream());
 					toServer.writeUTF(message);
 					connected = true;
+					new ReadThread().start();
 				} catch (UnknownHostException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	private class ExitListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				toServer.writeUTF("Leaving the chat room...");
+				socket.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			System.exit(0);	
 		}
 	}
 
@@ -94,8 +111,6 @@ public class ChatClient extends JFrame implements Runnable {
 				String message = lines[lines.length - 1];
 
 				try {
-					//socket = new Socket(host, 9898);
-					//toServer = new DataOutputStream(socket.getOutputStream());
 					toServer.writeUTF(message);
 				} catch (UnknownHostException e1) {
 					e1.printStackTrace();
@@ -110,6 +125,30 @@ public class ChatClient extends JFrame implements Runnable {
 		
 		@Override
 		public void keyReleased(KeyEvent e) {}
+	}
+	
+	private class ReadThread extends Thread{
+		DataInputStream inputFromClient;
+		
+		public ReadThread() {
+			try {
+				inputFromClient = new DataInputStream(socket.getInputStream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public void run() {
+			try {
+				while(true) {
+				    String in = inputFromClient.readUTF();
+				    textArea.append(in + "\n");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
 	}
 
 	public static void main(String[] args) {

@@ -3,6 +3,7 @@ package chat;
 
 import java.awt.TextArea;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,7 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 
-public class ChatServer extends JFrame implements Runnable {
+public class ChatServer extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static int WIDTH = 400;
@@ -49,9 +50,10 @@ public class ChatServer extends JFrame implements Runnable {
 	         try {
 				socket = serverSocket.accept();
 				textArea.append(
-						"\nStarting thread for client " + (clientThreads.size() + 1) + " at " + Instant.now()
+						"\nStarting thread for client " + (clientThreads.size() + 1)
+						+ " at " + Instant.now() + "\n"
 				);
-				ClientThread newClient = new ClientThread(socket, clientThreads.size() + 1);
+				ClientThread newClient = new ClientThread(socket, this, clientThreads.size() + 1);
 				clientThreads.add(newClient);
 				newClient.start();
 				
@@ -70,38 +72,66 @@ public class ChatServer extends JFrame implements Runnable {
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
 	}
-
+	
+	public void broadcast(String message, int excludeIndex) {
+		for(ClientThread client: clientThreads) {
+			if(client != null && client != clientThreads.get(excludeIndex)) {
+				client.sendMessage(message);
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		ChatServer chatServer = new ChatServer();
 	}
-
-	@Override
-	public void run() {
-		
-	}
 	
 	public class ClientThread extends Thread {
 		private Socket socket;
+		private ChatServer server;
+		DataInputStream inputFromClient;
+		DataOutputStream toServer;
 		private int id;
 		
-		public ClientThread(Socket socket, int id) {
+		public ClientThread(Socket socket, ChatServer server, int id) {
 			this.socket = socket;
+			this.server = server;
 			this.id = id;
+			try {
+				inputFromClient = new DataInputStream(socket.getInputStream());
+				toServer = new DataOutputStream(socket.getOutputStream());
+			    String in = inputFromClient.readUTF();
+			    in = id + ": " + in;
+			    synchronized(textArea){
+			    	textArea.append(in);
+			    }
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public void run() {
-			DataInputStream inputFromClient;
 				try {
-					inputFromClient = new DataInputStream(socket.getInputStream());
 					while(true) {
 					    String in = inputFromClient.readUTF();
-					    textArea.append("\n" + id + ": " + in);
+					    in = id + ": " + in;
+					    server.broadcast(in, id - 1);
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					try {
+						clientThreads.set(id - 1, null);
+						socket.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
+		}
+		
+		public void sendMessage(String message) {
+			try {
+				toServer.writeUTF(message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
