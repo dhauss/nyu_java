@@ -101,8 +101,7 @@ public class ChatClient extends JFrame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_ENTER && connected) {
-				textArea.append(" ");	//fixes bug where sending a carriage return alone resends last line of text
-				String[] lines = textArea.getText().split("\n");
+				String[] lines = textArea.getText().trim().split("\n");
 				String message = lines[lines.length - 1];
 				try {
 					toServer.writeUTF(message);
